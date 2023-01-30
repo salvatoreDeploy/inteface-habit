@@ -1,6 +1,8 @@
 import * as Popover from "@radix-ui/react-popover";
+import * as CheackBox from "@radix-ui/react-checkbox";
 import clsx from "clsx";
 import { ProgressBar } from "./ProgressBar";
+import { Check } from "phosphor-react";
 
 interface HabitDayProps {
   completed: number;
@@ -33,6 +35,38 @@ export function HabitDay({ completed, amount }: HabitDayProps) {
             17/01
           </span>
           <ProgressBar progress={41} />
+          <div className="mt-6 flex flex-col gap-3">
+            <CheackBox.Root className="flex items-center gap-3 group">
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
+                <CheackBox.Indicator>
+                  <Check size={20} className="text-white" />
+                </CheackBox.Indicator>
+              </div>
+              <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-500">
+                Beber 2L de Agua
+              </span>
+            </CheackBox.Root>
+            <CheackBox.Root className="flex items-center gap-3 group">
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
+                <CheackBox.Indicator>
+                  <Check size={20} className="text-white" />
+                </CheackBox.Indicator>
+              </div>
+              <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-500">
+                Programar 2 hrs
+              </span>
+            </CheackBox.Root>
+            <CheackBox.Root className="flex items-center gap-3 group">
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
+                <CheackBox.Indicator>
+                  <Check size={20} className="text-white" />
+                </CheackBox.Indicator>
+              </div>
+              <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-500">
+                Dormir 8hrs
+              </span>
+            </CheackBox.Root>
+          </div>
           <Popover.Arrow height={8} width={16} className="fill-zinc-900" />
         </Popover.Content>
       </Popover.Portal>
