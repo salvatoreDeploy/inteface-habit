@@ -1,6 +1,7 @@
 import { Check } from "phosphor-react";
 import * as CheackBox from "@radix-ui/react-checkbox";
 import { FormEvent, useState } from "react";
+import { api } from "../lib/api";
 
 const availableWeekDays = [
   "Domingo",
@@ -17,8 +18,22 @@ export function NewHabitForm() {
   const [weekDays, setWeekDays] = useState<Number[]>([]);
 
   // Função para confirmar criação de um novo habito
-  function createNewHabit(event: FormEvent) {
+  async function createNewHabit(event: FormEvent) {
     event.preventDefault();
+
+    if (!title || weekDays.length === 0) {
+      return;
+    }
+
+    await api.post("habit", {
+      title,
+      weekDays,
+    });
+
+    alert("Habito criado com sucesso");
+
+    setTitle("");
+    setWeekDays([]);
   }
 
   // Marcar e desmarcar os dias da semana no modal de novo habito
@@ -39,17 +54,21 @@ export function NewHabitForm() {
       <label htmlFor="title" className="font-semibold leading-tight">
         Qual seu comprometimento?
       </label>
+
       <input
         type="text"
         id="title"
         placeholder="Ex.: Exercicio, dormir bem etc..."
         className="p-4 rounded-lg mt-3 bg-zinc-800 text-white placeholder:text-zinc-400"
         autoFocus
+        value={title}
         onChange={(event) => setTitle(event.target.value)}
       />
+
       <label htmlFor="" className="font-semibold leading-tight mt-4">
         Qual a recorrência
       </label>
+
       <div className="flex flex-col gap-2 mt-3">
         {availableWeekDays.map((weekDay, index) => {
           return (
@@ -59,12 +78,14 @@ export function NewHabitForm() {
               onCheckedChange={() => {
                 handleToggleWeekDay(index);
               }}
+              checked={weekDays.includes(index)}
             >
               <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
                 <CheackBox.Indicator>
                   <Check size={20} className="text-white" />
                 </CheackBox.Indicator>
               </div>
+
               <span className=" text-white leading-tight">{weekDay}</span>
             </CheackBox.Root>
           );
